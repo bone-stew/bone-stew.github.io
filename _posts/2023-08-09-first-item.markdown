@@ -26,7 +26,7 @@ tags:
    - Markdown 시작부분에 다음과 같은 메타데이터를 첨부해야 합니다.
 
    ````
-   ```
+   ---
    layout: post 
    title: "글 올리는 법"
    subtitle: "jekyll 블로그 글 올리는 법"
@@ -36,7 +36,7 @@ tags:
    tags:
      - jekyll
      - blog
-   ```
+   ---
    ````
 
    layout: post는 고정입니다. 수정하지 마세요
