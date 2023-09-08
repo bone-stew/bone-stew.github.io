@@ -29,64 +29,55 @@ Redis를 사용하여 조회수를 관리하기로 결정했고 Redis를 사용�
 
 ```java
 if (userFirstTimeViewingPost(popupStoreId, userId)) {
-    String userViewKey = "USER-"+ userId + "POST-" + popupStoreId ;
-    redisTemplate.opsForValue().set(userViewKey, true);
-    redisTemplate.expire(userViewKey, 1, TimeUnit.DAYS);
-    incrementPostView(popupStoreId, popupStoreDetailDto.getPopupStore().getViews());
+    popupStoreRepository.createUserViewedKey(popupStoreId, userId);
+    popupStoreRepository.incrementPostView(popupStoreId, popupStoreDetailDto.getPopupStore().getViews());
 }
 ```
 
 ```java
 private boolean userFirstTimeViewingPost(Long popupStoreId, Long userId) {
-        String userKey = "USER-" + userId + "POST-" + popupStoreId ;
-        Boolean keyExists = redisTemplate.hasKey(userKey);
-        if (keyExists && keyExists != null) {
-            return false;
-        }
-        return true;
+    Boolean keyExists = popupStoreRepository.hasKey(popupStoreId, userId);
+    if (keyExists && keyExists != null) {
+        return false;
     }
+    return true;
+}
 ```
 
 비슷한 방식으로 유저가 포스트를 방문할때 포스트 아이디를 키값으로 이용해 조회수를 업데이트했습니다. 
 
 ```java
-private void incrementPostView(Long popupStoreId, Long views) {
-        String postKey = "POST-" + popupStoreId;
-        Boolean keyExists = redisTemplate.hasKey(postKey);
-        if (keyExists && keyExists != null) {
-            redisTemplate.opsForValue().increment(postKey);
-        } else {
-            redisTemplate.opsForValue().set(postKey, views+1L);
-        }
+public void incrementPostView(Long popupStoreId, Long views) {
+    String postKey = "POST:" + popupStoreId;
+    Boolean keyExists = redisTemplate.hasKey(postKey);
+    if (keyExists && keyExists != null) {
+        redisTemplate.opsForValue().increment(postKey);
+    } else {
+        redisTemplate.opsForValue().set(postKey, views + 1L);
     }
+}
 ```
 
 이렇게 이용된 포스트별 키값과 방문 여부를 스케줄러를 이용해 하루에 한번씩 데이터베이스에 업데이트하고 키를 삭제하는 방식을 적용했습니다.
 ```java
 @Scheduled(fixedRate = 24 * 60 * 60 * 1000)
-    @Transactional
-    public void updateRedisPopupStoreViews(){
-        Set<String> redisKeys = redisTemplate.keys("POST-*");
-        List<PopupStoreUpdateDto> updates = new ArrayList<>();
-        if (redisKeys != null) {
-            for (String key : redisKeys) {
-                String[] parts = key.split("-");
-                Long popupStoreId = Long.parseLong(parts[1]);
-                Long views = Long.parseLong((String) redisTemplate.opsForValue().get(key));
-                PopupStoreUpdateDto updateDto = new PopupStoreUpdateDto(popupStoreId, views);
-                updates.add(updateDto);
+  @Transactional
+  public void updateRedisPopupStoreViews() {
+      Set<String> redisKeys = popupStoreRepository.getKeys("POST:*");
+      List<PopupStoreUpdateDto> updates = new ArrayList<>();
+      if (redisKeys != null) {
+          for (String key : redisKeys) {
+              String[] parts = key.split(":");
+              Long popupStoreId = Long.parseLong(parts[1]);
+              Long views = popupStoreRepository.getViews(key);
+              PopupStoreUpdateDto updateDto = new PopupStoreUpdateDto(popupStoreId, views);
+              updates.add(updateDto);
+              popupStoreRepository.removeKey(key);
+          }
+      }
+      if (!updates.isEmpty()) {
+          popupStoreDao.batchUpdatePopupStoreViews(updates);
+      }
+  }
 
-                redisTemplate.delete(key);
-            }
-        }
-        if (!updates.isEmpty()) {
-            int rtn = popupStoreDao.batchUpdatePopupStoreViews(updates);
-        }
-        Set<String> userFirstTimeViewingKeys = redisTemplate.keys("USER-*POST-*");
-        if (userFirstTimeViewingKeys != null) {
-            for (String key : userFirstTimeViewingKeys) {
-                redisTemplate.delete(key);
-            }
-        }
-    }
 ```
