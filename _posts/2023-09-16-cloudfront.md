@@ -18,7 +18,7 @@ tags:
 
 ## 아키텍처
 
-<img src="/img/2023-09-16-cloudfront/image-20230917213421768.png" alt="image-20230917213421768" style="zoom: 50%;" />
+<img src="/img/image-20230917213421768.png" alt="image-20230917213421768" style="zoom: 50%;" />
 
 
 
