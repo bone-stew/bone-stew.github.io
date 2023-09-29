@@ -1,11 +1,13 @@
 ---
 layout: post
-title: "토스페이먼츠를 사용한 이유"
+title: "인앱 결제와 PG 결제의 차이점"
 date: 2023-09-23 12:00:00
 author: "조재룡"
 catalog: true
 tags:
-  - tosspayments
+  - 인앱 결제
+  - PG 결제
+  - TossPayments
 ---
 
 ## TossPayments를 이용해서 결제 구현
