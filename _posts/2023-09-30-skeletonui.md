@@ -13,9 +13,10 @@ tags:
 ## 스켈레톤UI란
 스켈레톤UI는 웹 및 모바일 앱에서 로딩 중에 사용자 경험을 향상시키기 위한 디자인 패턴 중 하나입니다.<br>
 사용자에게 데이터가 로딩되고 있는지 시각적으로 알려줌으로써 지루함을 덜 느끼고 페이지가 어떻게 보일지에 대한 감을 잡을 수 있게 도와줍니다.
-
-![NaverSkeletonUI](https://github.com/bone-stew/bone-stew.github.io/blob/main/img/naver_skeleton.jpg?raw=true)
-![YoutubeSkeletonUI](https://github.com/bone-stew/bone-stew.github.io/blob/main/img/youtube_skeleton.jpg?raw=true)
+<p float="left">
+<img src="https://github.com/bone-stew/bone-stew.github.io/blob/main/img/naver_skeleton.jpg"   width="200" height="400"/>
+<img src="https://github.com/bone-stew/bone-stew.github.io/blob/main/img/youtube_skeleton.jpg"   width="200" height="400"/>
+</p>
 
 ## 스켈레톤 ui의 장점
 - 스켈레톤 UI는 사용자에게 로딩 화면 없이 데이터가 표시되기를 기다리는 것으로 인한 긴장감을 줄이며 작동하지 않는 것으로 오해하는 것을 방지합니다.
