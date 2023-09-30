@@ -1,7 +1,7 @@
 ---
 layout: post
-title: "안드로이드 로딩 시각화 적용기"
-date: 2023-09-03 12:00:00
+title: "안드로이드 로딩 시각화 적용"
+date: 2023-09-30 12:00:00
 author: "조상원"
 catalog: true
 tags:
@@ -13,6 +13,7 @@ tags:
 ## 스켈레톤UI란
 스켈레톤UI는 웹 및 모바일 앱에서 로딩 중에 사용자 경험을 향상시키기 위한 디자인 패턴 중 하나입니다.<br>
 사용자에게 데이터가 로딩되고 있는지 시각적으로 알려줌으로써 지루함을 덜 느끼고 페이지가 어떻게 보일지에 대한 감을 잡을 수 있게 도와줍니다.
+
 <p float="left">
 <img src="https://github.com/bone-stew/bone-stew.github.io/blob/main/img/naver_skeleton.jpg"   width="200" height="400"/>
 <img src="https://github.com/bone-stew/bone-stew.github.io/blob/main/img/youtube_skeleton.jpg"   width="200" height="400"/>
