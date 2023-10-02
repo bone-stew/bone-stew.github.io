@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "RestDocs와 OpenAPI Specification을 이용한 효과적인 API 문서화"
-date: 2023-09-10 12:00:00
+date: 2023-09-24 12:00:00
 author: "서명현"
 catalog: true
 tags:
