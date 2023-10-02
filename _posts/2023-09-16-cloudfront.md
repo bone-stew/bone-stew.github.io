@@ -1,13 +1,14 @@
 ---
 layout: post
-title: "React 배포"
-subtitle: "S3, cloudfront"
+title: "React CI/CD 파이프라인 구축"
+subtitle: "S3, cloudfront, Github Action"
 date: 2023-09-16 12:00:00
 author: "김우원"
 catalog: true
 tags:
   - DevOps
   - CI/CD
+  - Github-Action
   - S3
   - CloudFront
 ---
